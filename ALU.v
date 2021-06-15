@@ -1,3 +1,10 @@
+/*
+ * v1.0 +
+ * 增加了 and xor
+ * 测试正确
+*/
+`include "SNAIL.h"
+
 module ALU (
     input wire [7:0] A,
     input wire [7:0] B,
@@ -6,8 +13,10 @@ module ALU (
     output wire [1:0] cc
 );
 
-    assign E = (op == 4'h0)? A + B:
-               (op == 4'h1)? A - B: 8'hxx;
+    assign E = (op == `ADD)? A + B:
+               (op == `SUB)? A - B:
+               (op == `AND)? A & B:
+               (op == `XOR)? A ^ B: 8'hxx;
     assign cc = {A == B, A > B}; // ==10, <00, >01
 
 endmodule

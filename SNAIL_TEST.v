@@ -1,10 +1,6 @@
 `timescale 10ns/1ns
 `include "SNAIL.h"
 `define ins rom_out[23:20]
-`define fun rom_out[19:16]
-`define rA rom_out[14:12]
-`define rB rom_out[10:8]
-`define rC rom_out[6:0]
 
 module SNAIL_TEST;
     wire [7:0] ram_addr, ram_in, ram_out, rom_addr;
@@ -46,20 +42,17 @@ module SNAIL_TEST;
 
     always @(negedge clk) begin
         if (rst_ && (`ins == `HLT)) #(CYCLE + 0.1) $finish;
-        // $write("d- %h%h %h%h %h\n", `ins, `fun, `rA, `rB, `rC);
         $write("%3d: ", $stime);
-        for (i = 0; i < 32; i = i + 1) begin
+        // $write("d- %h %h %h\n", rom_out[24:16], rom_out[15:8], rom_out[7:0]);
+        for (i = 0; i < 1; i = i + 1) begin
             if (ram.mem[i] !== 8'hxx)
                 $write(" %c ", ram.mem[i]);
+                // $write(" %d ", ram.mem[i]);
             else
                 $write(" . ");
         end
         $write("\n");
     end
-
-    // always @(posedge clk) begin
-    //     $write("u- %h%h %h%h %h\n", `ins, `fun, `rA, `rB, `rC);
-    // end
 
     initial begin
         $dumpfile("SNAIL_TEST.vcd");  // 指定波形文件

@@ -12,15 +12,14 @@ module REGFILE (
 
     reg [7:0] rf [0:7];
 
-    assign A = (srcA == 3'b000)? 8'h00: rf[srcA];
-    assign B = (srcB == 3'b000)? 8'h00: rf[srcB];
+    assign A = (srcA == 3'o0)? 8'h00: rf[srcA];
+    assign B = (srcB == 3'o0)? 8'h00: rf[srcB];
 
     always @(posedge clk) begin
         if (dstM != 3'o0)
             rf[dstM] <= M;
         if (dstE != 3'o0 && dstE != dstM)
             rf[dstE] <= E;
-        
     end
     
 endmodule

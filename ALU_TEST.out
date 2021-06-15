@@ -1,0 +1,112 @@
+#! /c/iverilog/bin/vvp
+:ivl_version "0.9.7 " "(v0_9_7)";
+:vpi_time_precision - 9;
+:vpi_module "system";
+:vpi_module "v2005_math";
+:vpi_module "va_math";
+S_00F78AF8 .scope module, "ALU_TEST" "ALU_TEST" 2 3;
+ .timescale -8 -9;
+P_00F7A3E4 .param/real "CYCLE" 2 20, Cr<m4000000000000000gfc2>; value=1.00000
+v00E2F1C0_0 .net "A", 7 0, v00E2EA88_0; 1 drivers
+v00E2ED48_0 .net "B", 7 0, v00E2F0B8_0; 1 drivers
+v00E2EB90_0 .net "E", 7 0, L_00E2EEA8; 1 drivers
+v00E2EC40_0 .net "cc", 1 0, L_00E2EF58; 1 drivers
+v00E2F008_0 .var "clk", 0 0;
+v00E2EA88_0 .var "jcqa", 7 0;
+v00E2F0B8_0 .var "jcqb", 7 0;
+v00E2EC98_0 .var "jcqop", 3 0;
+v00E2F378_0 .net "op", 3 0, v00E2EC98_0; 1 drivers
+E_00F7A320 .event posedge, v00E2F008_0;
+S_00F78C08 .scope module, "alu" "ALU" 2 13, 3 3, S_00F78AF8;
+ .timescale 0 0;
+L_00F74730 .functor AND 8, v00E2F0B8_0, v00E2EA88_0, C4<11111111>, C4<11111111>;
+L_00F74688 .functor XOR 8, v00E2F0B8_0, v00E2EA88_0, C4<00000000>, C4<00000000>;
+v00F7B4A8_0 .alias "A", 7 0, v00E2F1C0_0;
+v00F7B500_0 .alias "B", 7 0, v00E2ED48_0;
+v00F7B190_0 .alias "E", 7 0, v00E2EB90_0;
+v00F7B3A0_0 .net *"_s0", 3 0, C4<0000>; 1 drivers
+v00F7AF28_0 .net *"_s10", 7 0, L_00E2E8D0; 1 drivers
+v00F7B1E8_0 .net *"_s12", 3 0, C4<0010>; 1 drivers
+v00F7AED0_0 .net *"_s14", 0 0, L_00E2EDF8; 1 drivers
+v00F7AE20_0 .net *"_s16", 7 0, L_00F74730; 1 drivers
+v00F7B240_0 .net *"_s18", 3 0, C4<0011>; 1 drivers
+v00F7AFD8_0 .net *"_s2", 0 0, L_00E2EDA0; 1 drivers
+v00F7B298_0 .net *"_s20", 0 0, L_00E2ECF0; 1 drivers
+v00F7B2F0_0 .net *"_s22", 7 0, L_00F74688; 1 drivers
+v00F7AF80_0 .net *"_s24", 7 0, C4<xxxxxxxx>; 1 drivers
+v00F7B030_0 .net *"_s26", 7 0, L_00E2F168; 1 drivers
+v00F7B088_0 .net *"_s28", 7 0, L_00E2F270; 1 drivers
+v00F7B0E0_0 .net *"_s30", 7 0, L_00E2EE50; 1 drivers
+v00F7B138_0 .net *"_s34", 0 0, L_00E2E980; 1 drivers
+v00F7B348_0 .net *"_s36", 0 0, L_00E2EF00; 1 drivers
+v00F7B3F8_0 .net *"_s4", 7 0, L_00E2F060; 1 drivers
+v00F7ADC8_0 .net *"_s6", 3 0, C4<0001>; 1 drivers
+v00E2EB38_0 .net *"_s8", 0 0, L_00E2EAE0; 1 drivers
+v00E2F2C8_0 .alias "cc", 1 0, v00E2EC40_0;
+v00E2EBE8_0 .alias "op", 3 0, v00E2F378_0;
+L_00E2EDA0 .cmp/eq 4, v00E2EC98_0, C4<0000>;
+L_00E2F060 .arith/sum 8, v00E2F0B8_0, v00E2EA88_0;
+L_00E2EAE0 .cmp/eq 4, v00E2EC98_0, C4<0001>;
+L_00E2E8D0 .arith/sub 8, v00E2F0B8_0, v00E2EA88_0;
+L_00E2EDF8 .cmp/eq 4, v00E2EC98_0, C4<0010>;
+L_00E2ECF0 .cmp/eq 4, v00E2EC98_0, C4<0011>;
+L_00E2F168 .functor MUXZ 8, C4<xxxxxxxx>, L_00F74688, L_00E2ECF0, C4<>;
+L_00E2F270 .functor MUXZ 8, L_00E2F168, L_00F74730, L_00E2EDF8, C4<>;
+L_00E2EE50 .functor MUXZ 8, L_00E2F270, L_00E2E8D0, L_00E2EAE0, C4<>;
+L_00E2EEA8 .functor MUXZ 8, L_00E2EE50, L_00E2F060, L_00E2EDA0, C4<>;
+L_00E2E980 .cmp/eq 8, v00E2EA88_0, v00E2F0B8_0;
+L_00E2EF00 .cmp/gt 8, v00E2EA88_0, v00E2F0B8_0;
+L_00E2EF58 .concat [ 1 1 0 0], L_00E2EF00, L_00E2E980;
+    .scope S_00F78AF8;
+T_0 ;
+    %delay 5, 0;
+    %load/v 8, v00E2F008_0, 1;
+    %inv 8, 1;
+    %ix/load 0, 1, 0;
+    %assign/v0 v00E2F008_0, 0, 8;
+    %jmp T_0;
+    .thread T_0;
+    .scope S_00F78AF8;
+T_1 ;
+    %set/v v00E2F008_0, 1, 1;
+    %movi 8, 3, 8;
+    %set/v v00E2EA88_0, 8, 8;
+    %movi 8, 2, 8;
+    %set/v v00E2F0B8_0, 8, 8;
+    %set/v v00E2EC98_0, 0, 4;
+    %delay 100, 0;
+    %vpi_call 2 32 "$finish";
+    %end;
+    .thread T_1;
+    .scope S_00F78AF8;
+T_2 ;
+    %wait E_00F7A320;
+    %vpi_call 2 35 "$write", "%3d ", v00E2F1C0_0;
+    %vpi_call 2 36 "$write", "%3d ", v00E2ED48_0;
+    %vpi_call 2 37 "$write", "%3d ", v00E2F378_0;
+    %vpi_call 2 38 "$write", "%3d \012", v00E2EB90_0;
+    %load/v 8, v00E2F0B8_0, 8;
+    %mov 16, 0, 24;
+    %addi 8, 1, 32;
+    %set/v v00E2F0B8_0, 8, 8;
+    %load/v 8, v00E2EC98_0, 4;
+    %mov 12, 0, 28;
+    %addi 8, 1, 32;
+    %movi 40, 4, 32;
+    %mod 8, 40, 32;
+    %set/v v00E2EC98_0, 8, 4;
+    %jmp T_2;
+    .thread T_2;
+    .scope S_00F78AF8;
+T_3 ;
+    %vpi_call 2 44 "$dumpfile", "ALU_TEST.vcd";
+    %vpi_call 2 45 "$dumpvars", 1'sb0, S_00F78C08;
+    %vpi_call 2 46 "$dumpvars", 1'sb0, v00E2F008_0;
+    %end;
+    .thread T_3;
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    "ALU_TEST.v";
+    "ALU.v";
